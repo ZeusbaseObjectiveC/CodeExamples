@@ -1,7 +1,7 @@
 //
 //  RootViewController.m
 //  Created by Keith Harrison on 06-June-2011 http://useyourloaf.com
-//  Copyright (c) 2011 Keith Harrison. All rights reserved.
+//  Copyright (c) 2011-2015 Keith Harrison. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
 //  modification, are permitted provided that the following conditions are met:
@@ -33,29 +33,32 @@
 
 @implementation RootViewController
 
-- (void)dealloc
-{
-    [super dealloc];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return YES;
-}
-
 #pragma mark -
 #pragma mark === Text field delegate methods ===
 #pragma mark -
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    
-    if (textField.text) {
-        SearchViewController *viewController = [[SearchViewController alloc] initWithNibName:@"SearchViewController" bundle:nil];
-        viewController.query = [NSString stringWithFormat:@"%@", textField.text];
-        [[self navigationController] pushViewController:viewController animated:YES];
-        [viewController release];
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if (textField.text)
+    {
+        [self performSegueWithIdentifier:@"SegueSearchView" sender:textField];
     }
 	[textField resignFirstResponder];
 	return YES;
+}
+
+#pragma mark -
+#pragma mark === Segue ===
+#pragma mark -
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"SegueSearchView"])
+    {
+        UITextField *textField = sender;
+        SearchViewController *viewController = segue.destinationViewController;
+        viewController.query = [NSString stringWithFormat:@"%@", textField.text];
+    }
 }
 
 @end

@@ -32,21 +32,10 @@
 
 @implementation TwitterSearchAppDelegate
 
-@synthesize window=_window;
-@synthesize navigationController=_navigationController;
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window.rootViewController = self.navigationController;
-    [self.window makeKeyAndVisible];
     return YES;
 }
 
-- (void)dealloc
-{
-    [_window release];
-    [_navigationController release];
-    [super dealloc];
-}
 
 @end
